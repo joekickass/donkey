@@ -1,5 +1,7 @@
+import os
 import platform
 import pytest
+
 from donkeycar.parts.datastore import Tub
 from donkeycar.parts.simulation import SquareBoxCamera, MovingSquareTelemetry
 
@@ -11,23 +13,32 @@ def on_pi():
 
 
 @pytest.fixture
-def tub_path(tmpdir):
-    tub_path = tmpdir.mkdir('tubs').join('tub')
-    return str(tub_path)
+def tubs_dir(tmpdir):
+    tubs_dir = str(tmpdir.mkdir('tubs'))
+    return tubs_dir
 
 
 @pytest.fixture
-def tub(tub_path):
-    t = create_sample_tub(tub_path, records=10)
-    return t
+def tub_dir_created(tub_dir):
+    tubs_dir, tub_dir = tub_dir
+
+    return (tubs_dir, tub_dir)
 
 
 @pytest.fixture
-def tubs(tmpdir, tubs=5):
-    tubs_dir = tmpdir.mkdir('tubs')
-    tub_paths = [ str(tubs_dir.join('tub_{}'.format(i))) for i in range(tubs) ]
-    tubs = [ create_sample_tub(tub_path, records=5) for tub_path in tub_paths ]
-    return (str(tubs_dir), tub_paths, tubs)
+def empty_tub(tub_dir):
+    tubs_dir, tub_dir = tub_dir
+    return Tub(tub_dir)
+
+
+def create_sample_tubs(root_dir, cnt=5, records=10):
+    '''
+    Create samples of tubs with records. You can specify both how many tubs to create, and
+    how many records each tub should contain.
+    '''
+
+    tub_paths = [ os.path.join(root_dir, 'tub_{}'.format(i)) for i in range(cnt) ]
+    return [ create_sample_tub(tub_path, records=records) for tub_path in tub_paths ]
 
 
 def create_sample_tub(path, records=10):
@@ -45,6 +56,22 @@ def create_sample_record():
     tel = MovingSquareTelemetry()
     x, y = tel.run()
     img_arr = cam.run(x, y)
-    return {'cam/image_array': img_arr, 'angle': x, 'throttle':y}
+    angle = x
+    throttle = y
+    return {'cam/image_array': img_arr, 'angle': angle, 'throttle': throttle }
 
 
+@pytest.fixture
+def models_dir(tmpdir):
+    models_dir = tmpdir.mkdir('models')
+    return str(models_dir)
+
+
+@pytest.fixture
+def model():
+    return default_linear()
+
+
+@pytest.fixture
+def pilot(model):
+    return KerasLinear(model)
