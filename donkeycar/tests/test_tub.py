@@ -221,8 +221,6 @@ def test_get_train_val_gen(tubs_dir):
     train_gen, val_gen = tub.get_train_val_gen(x, y)
 
     train_batch = next(train_gen)
-    assert len(train_batch)
-
     # X is a list of all requested features (angle & throttle)
     X = train_batch[0]
     assert len(X) == 2

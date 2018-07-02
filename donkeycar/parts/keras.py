@@ -21,13 +21,9 @@ class KerasPilot:
     def shutdown(self):
         pass
 
-    def train(self, train_gen, val_gen,
-              saved_model_path, epochs=100, steps=100, train_split=0.8,
-              verbose=1, min_delta=.0005, patience=5, use_early_stop=True):
-        """
-        train_gen: generator that yields an array of images an array of
-
-        """
+    def train(self, train_gen, val_gen, saved_model_path,
+              epochs=100, steps=100, train_split=0.8, verbose=1,
+              min_delta=.0005, patience=5, use_early_stop=True):
 
         # checkpoint to save model after each epoch
         save_best = ModelCheckpoint(saved_model_path,

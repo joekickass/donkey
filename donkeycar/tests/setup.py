@@ -3,6 +3,7 @@ import platform
 import pytest
 
 from donkeycar.parts.datastore import Tub
+from donkeycar.parts.keras import KerasLinear, default_linear
 from donkeycar.parts.simulation import SquareBoxCamera, MovingSquareTelemetry
 
 
@@ -36,7 +37,6 @@ def create_sample_tubs(root_dir, cnt=5, records=10):
     Create samples of tubs with records. You can specify both how many tubs to create, and
     how many records each tub should contain.
     '''
-
     tub_paths = [ os.path.join(root_dir, 'tub_{}'.format(i)) for i in range(cnt) ]
     return [ create_sample_tub(tub_path, records=records) for tub_path in tub_paths ]
 

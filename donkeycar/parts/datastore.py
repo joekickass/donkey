@@ -386,7 +386,7 @@ class Tub(object):
 
         Returns
         -------
-        A tuple (train_gen, val_gen), where where train_gen is the training set generator, and
+        A tuple (train_gen, val_gen), where train_gen is the training set generator, and
         val_gen the validation set generator.
 
         See Also
