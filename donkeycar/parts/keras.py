@@ -56,12 +56,10 @@ class KerasPilot:
 
 
 class KerasLinear(KerasPilot):
-    def __init__(self, model=None, num_outputs=None, *args, **kwargs):
+    def __init__(self, model=None, *args, **kwargs):
         super(KerasLinear, self).__init__(*args, **kwargs)
         if model:
             self.model = model
-        elif num_outputs is not None:
-            self.model = default_linear()
         else:
             self.model = default_linear()
 

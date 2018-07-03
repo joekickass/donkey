@@ -40,9 +40,11 @@ def test_tub_load(tubs_dir):
 
 def test_tub_load_empty_dir_raises_error(tubs_dir):
     # Create an empty dir (missing tub metadata)
-    tub_dir = os.mkdir(os.path.join(tubs_dir, 'tub_0'))
-    with pytest.raises(TypeError):
-        Tub(tub_dir)
+    tub_path = os.path.join(tubs_dir, 'tub_0')
+    os.mkdir(tub_path)
+
+    with pytest.raises(FileNotFoundError):
+        Tub(tub_path)
 
 
 def test_get_last_ix(tubs_dir):
