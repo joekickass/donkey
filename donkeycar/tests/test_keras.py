@@ -18,8 +18,9 @@ def test_create_linear_with_model(model):
     assert kl.model is not None
 
 
+@pytest.mark.slow
 def test_train_model(models_dir, tubs_dir, pilot):
-    """ Test train model for 1 epoch """
+    """ Train model for 1 epoch """
     # Create a tub with 100 records
     tub = create_sample_tubs(tubs_dir, cnt=1, records=100)[0]
 
@@ -38,8 +39,9 @@ def test_train_model(models_dir, tubs_dir, pilot):
     assert nbr_if_epochs == 1
 
 
+@pytest.mark.slow
 def test_train_model_2(models_dir, tubs_dir, pilot):
-    """ Test train model for 2 epochs and ensure it improves """
+    """ Train model for 2 epochs and make sure it improves """
     # Create a tub with 100 records
     tub = create_sample_tubs(tubs_dir, cnt=1, records=100)[0]
 
